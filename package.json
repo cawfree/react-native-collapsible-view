@@ -1,6 +1,6 @@
 {
   "name": "@cawfree/react-native-collapsible-view",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A <Collapsible/> component for react-native that plays nicely with Android.",
   "main": "index.js",
   "scripts": {
