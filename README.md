@@ -15,7 +15,7 @@ yarn add @cawfree/react-native-collapsible-view
 ```javascript
 import React from 'react';
 import { View, Text } from 'react-native';
-import Collapsible from '@cawfree/react-native-collapsing-view';
+import Collapsible from '@cawfree/react-native-collapsible-view';
 
 export default ({ collapsed, ...nextProps }) => (
   <Collapsible
