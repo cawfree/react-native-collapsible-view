@@ -40,7 +40,6 @@ class Collapsible extends React.Component {
         {
           toValue: height,
           duration,
-          useNativeDriver: true,
         },
       )
         .start();
@@ -50,7 +49,6 @@ class Collapsible extends React.Component {
         {
           toValue: 0,
           duration,
-          useNativeDriver: true,
         },
       )
         .start();
@@ -82,7 +80,6 @@ class Collapsible extends React.Component {
               {
                 toValue: collapsed ? 0 : height,
                 duration,
-                useNativeDriver: true,
               },
             )
             .start();
