@@ -1,0 +1,30 @@
+{
+  "name": "@cawfree/react-native-collapsible-view",
+  "version": "1.0.0",
+  "description": "A <Collapsible/> component for react-native that plays nicely with Android.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cawfree/react-native-collapsible-view.git"
+  },
+  "keywords": [
+    "react",
+    "native",
+    "react-native-",
+    "collapsing",
+    "collapsible",
+    "collapsed",
+    "shrink",
+    "resize",
+    "view"
+  ],
+  "author": "Alex Thomas (@cawfree)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cawfree/react-native-collapsible-view/issues"
+  },
+  "homepage": "https://github.com/cawfree/react-native-collapsible-view#readme"
+}
