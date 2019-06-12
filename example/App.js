@@ -1,30 +1,37 @@
 import React from 'react';
 import {
-  ScrollView,
+  Animated,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
   View,
+  Dimensions,
 } from 'react-native';
 
-import CollapsibleView from './CollapsibleView';
+import Collapsible from './CollapsibleView';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  button: {
+    width: Dimensions.get('window').width,
+    height: 55,
+    backgroundColor: 'red',
+  },
+  extend: {
+    width: Dimensions.get('window').width,
+    backgroundColor: 'yellow',
+  },
 });
 
-const screenWidth = Dimensions.get('window').width;
-const numberOfViews = 25;
-const rowHeight = 50;
-
-class Row extends React.Component {
+export default class App extends React.Component {
   constructor(nextProps) {
     super(nextProps);
     this.__onPress = this.__onPress.bind(this);
+    this.__onExpand = this.__onExpand.bind(this);
     this.state = {
-      collapsed: nextProps.collapsed,
+      collapsed: true,
+      animHeight: new Animated.Value(55),
     };
   }
   __onPress(e) {
@@ -34,63 +41,48 @@ class Row extends React.Component {
       },
     );
   }
+  __onExpand(e) {
+    const { animHeight } = this.state;
+    return Animated.timing(
+      animHeight,
+      {
+        toValue: 500,
+        duration: 600,
+      },
+    )
+      .start();
+  }
   render() {
-    const {
-      childHeight,
-      duration,
-    } = this.props;
     const {
       collapsed,
-      childCollapsed,
+      animHeight,
+      ...extraState
     } = this.state;
     return (
-      <TouchableOpacity
-        style={{
-          width: screenWidth,
-          borderWidth: 5,
-          padding: 20,
-        }}
-        onPress={this.__onPress}
-      >
-        <CollapsibleView
-          duration={duration}
-          collapsed={collapsed}
-        >
-          <View
-            style={{
-              width: screenWidth,
-              height: screenWidth,
-              backgroundColor: 'green',
-            }}
-          />
-        </CollapsibleView>
-      </TouchableOpacity>
-    );
-  }
-};
-
-export default class App extends React.Component {
-  constructor(nextProps) {
-    super(nextProps);
-    this.state = {
-      views: [...Array(numberOfViews)]
-        .map((e, i) => (
-          <Row
-            duration={Math.random() * 2000}
-            collapsed={Math.random() > 0.5}
-            childHeight={Math.random() * 400}
-          />
-        )),
-    };
-  }
-  render() {
-    const { views } = this.state;
-    return (
-      <ScrollView
+      <View
         style={styles.container}
       >
-        {views}
-      </ScrollView>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={this.__onPress}
+        >
+        </TouchableOpacity>
+        <Collapsible
+          collapsed={collapsed}
+        >
+          <TouchableOpacity
+            style={styles.extend}
+            onPress={this.__onExpand}
+          >
+            <Animated.View
+              style={{
+                width: Dimensions.get('window').width,
+                height: animHeight,
+              }}
+            />
+          </TouchableOpacity>
+        </Collapsible>
+      </View>
     );
   }
 }

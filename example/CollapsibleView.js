@@ -71,18 +71,23 @@ class Collapsible extends React.Component {
         height,
       },
       () => {
+        const { collapsed } = this.props;
+        const { animValue } = this.state;
         if (shouldInit) {
-          const { collapsed } = this.props;
-          const { animValue } = this.state;
           Animated
             .timing(
               animValue,
               {
                 toValue: collapsed ? 0 : height,
-                duration,
+                // TODO: use a fast duration to catch up with content size changes
+                duration: 100,
               },
             )
             .start();
+        }
+        if (!collapsed) {
+          animValue
+            .setValue(height);
         }
       },
     );
