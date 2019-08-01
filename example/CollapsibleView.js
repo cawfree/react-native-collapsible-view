@@ -3,6 +3,7 @@ import {
   Animated,
   View,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -21,9 +22,11 @@ class Collapsible extends React.Component {
     super(nextProps);
     this.state = {
       animValue: new Animated.Value(0),
+      width: undefined,
       height: 0,
     };
     this.__onLayout = this.__onLayout.bind(this);
+    this.__onRootLayout = this.__onRootLayout.bind(this);
   }
   componentWillUpdate(nextProps, nextState) {
     const {
@@ -59,9 +62,20 @@ class Collapsible extends React.Component {
     return new Promise(resolve => child.measure(resolve))
       .then((ox, oy, width, height, px, py) => height);
   }
-  __onLayout(e) {
+  __onRootLayout(e) {
     const {
       width,
+    } = e.nativeEvent.layout;
+    if (width !== this.state.width) {
+      this.setState(
+        {
+          width,
+        },
+      );
+    }
+  }
+  __onLayout(e) {
+    const {
       height,
       duration,
     } = e.nativeEvent.layout;
@@ -99,6 +113,7 @@ class Collapsible extends React.Component {
     } = this.props;
     const {
       animValue: height,
+      width,
     } = this.state;
     return (
       <Animated.View
@@ -106,6 +121,7 @@ class Collapsible extends React.Component {
           overflow: 'hidden',
           height,
         }}
+        onLayout={this.__onRootLayout}
         removeClippedSubviews={false}
         collapsable={false}
         renderToHardwareTextureAndroid
@@ -113,7 +129,14 @@ class Collapsible extends React.Component {
         <View
           ref="child"
           onLayout={this.__onLayout}
-          style={styles.container}
+          style={[
+            styles.container,
+            {
+              // XXX: Hack to force the web to scale.
+              width: Platform.OS === 'web' ? width : undefined,
+              borderWidth: 1,
+            },
+          ]}
         >
           {children}
         </View>
