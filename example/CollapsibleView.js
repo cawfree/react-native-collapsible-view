@@ -134,7 +134,6 @@ class Collapsible extends React.Component {
             {
               // XXX: Hack to force the web to scale.
               width: Platform.OS === 'web' ? width : undefined,
-              borderWidth: 1,
             },
           ]}
         >
